@@ -2,11 +2,14 @@ package com.example.lurzeood.criminalintent2;
 
 import android.support.v4.app.Fragment;
 
-public class CrimeActivity extends SinglefragmentActivity {
+/**
+ * Created by Lurzeood on 2017/4/25 0025.
+ */
 
+public class CrimeListActivity extends SinglefragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new CrimeFragment();
+        return new CrimeListFragment();
     }
 }
