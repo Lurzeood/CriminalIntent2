@@ -3,14 +3,14 @@ package com.example.lurzeood.criminalintent2;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Lurzeood on 2017/4/25 0025.
  */
 
-public abstract class SinglefragmentActivity extends FragmentActivity {
+public abstract class SinglefragmentActivity extends AppCompatActivity {
 
     protected abstract Fragment createFragment();
 
