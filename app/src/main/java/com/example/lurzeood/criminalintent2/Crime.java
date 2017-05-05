@@ -11,6 +11,16 @@ public class Crime {
 
     private UUID mId;
     private String mTitle;
+    private String mSuspect;
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String suspect) {
+        mSuspect = suspect;
+    }
+
     private Date mDate;
     private boolean mSolved;
 
