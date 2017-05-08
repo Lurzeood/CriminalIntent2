@@ -20,4 +20,11 @@
         </activity>
     </application>
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false"
+        />
+
 </manifest>
