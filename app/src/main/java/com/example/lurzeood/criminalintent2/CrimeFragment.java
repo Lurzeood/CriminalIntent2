@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +22,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
@@ -39,7 +43,11 @@ public class CrimeFragment extends Fragment {
 
     private static final int REQUEST_CONTACT = 1;
 
+    private static final int REQUEST_PHOTO = 2;
+
     private Crime mCrime;
+
+    private File mPhotoFile;
 
     private EditText mTitleField;
 
@@ -48,6 +56,10 @@ public class CrimeFragment extends Fragment {
     private Button mReportButton;
 
     private Button mSuspectButton;
+
+    private ImageButton mPhotoButton;
+
+    private ImageView mPhotoView;
 
     private CheckBox mSolvedCheckBox;
 
@@ -73,6 +85,7 @@ public class CrimeFragment extends Fragment {
         //UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity
         //.EXTRA_CRIME_ID);//破坏封装性，只能从指定位置获取信息
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
     }
 
     @Override
@@ -218,6 +231,25 @@ public class CrimeFragment extends Fragment {
                 PackageManager.MATCH_DEFAULT_ONLY)==null){
             mSuspectButton.setEnabled(false);
         }
+
+        mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camera);
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        boolean canTakePhoto = mPhotoFile!=null &&
+                captureImage.resolveActivity(packageManager) != null;
+        mPhotoButton.setEnabled(canTakePhoto);
+        if (canTakePhoto){
+            Uri uri = Uri.fromFile(mPhotoFile);
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        }
+        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(captureImage,REQUEST_PHOTO);
+            }
+        });
+
+
+        mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
 
         return v;
 
